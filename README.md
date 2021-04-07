@@ -2,17 +2,17 @@
 
 ## OBJETIVOS
 
-  Minimizar o custo (DISTANCIA * Kc)
-  Maximizar a proximidade
-  Minimizar o tempo (DISTANCIA * Kt)
-  Maximizar a quantidade (Soma de necessidadades)
+    Minimizar o custo (DISTANCIA * Kc)
+    Maximizar a proximidade
+    Minimizar o tempo (DISTANCIA * Kt)
+    Maximizar a quantidade (Soma de necessidadades)
 
 
 ## RESTRIÇÕES
 
-  A soma das necessidadades de cada loja afetada por cada armazem tem que ser menor que a capacidade;
-  A necessidade de cada loja tem que ser totalmente abastecida;
-  Cada loja só pode ser servida por um armazem;
+    A soma das necessidadades de cada loja afetada por cada armazem tem que ser menor que a capacidade;
+    A necessidade de cada loja tem que ser totalmente abastecida;
+    Cada loja só pode ser servida por um armazem;
 
 ## HEURISTICAS CONSTRUTIVAS
 ### Clusters
