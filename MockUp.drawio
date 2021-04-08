@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-04-08T09:17:39.369Z" agent="5.0 (Windows)" etag="JBfrIvGBdMH_bRBnm0WY" version="14.5.8" type="github">
+<mxfile host="app.diagrams.net" modified="2021-04-08T09:19:41.411Z" agent="5.0 (Windows)" etag="oG_RhCs__r3428u5jzvZ" version="14.5.8" type="github">
   <diagram id="fLoytuqCdq5HbhO5DAlu" name="Page-1">
     <mxGraphModel dx="2374" dy="1090" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -24,8 +24,11 @@
         <mxCell id="VqVprpiNp-JgvhQdnsUL-3" value="Decisor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
           <mxGeometry x="170" y="370" width="70" height="130" as="geometry" />
         </mxCell>
+        <mxCell id="VqVprpiNp-JgvhQdnsUL-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="VqVprpiNp-JgvhQdnsUL-6" target="VqVprpiNp-JgvhQdnsUL-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="VqVprpiNp-JgvhQdnsUL-6" value="SAD (Algoritmos)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="790" y="180" width="120" height="60" as="geometry" />
+          <mxGeometry x="790" y="160" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="VqVprpiNp-JgvhQdnsUL-9" value="ERP" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="145" y="660" width="120" height="60" as="geometry" />
@@ -79,6 +82,18 @@
             <mxPoint x="900" y="670" as="sourcePoint" />
             <mxPoint x="800" y="860" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="VqVprpiNp-JgvhQdnsUL-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="VqVprpiNp-JgvhQdnsUL-22" target="VqVprpiNp-JgvhQdnsUL-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VqVprpiNp-JgvhQdnsUL-22" value="Clusters" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VqVprpiNp-JgvhQdnsUL-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.561;entryY=-0.003;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="VqVprpiNp-JgvhQdnsUL-23" target="VqVprpiNp-JgvhQdnsUL-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VqVprpiNp-JgvhQdnsUL-23" value="Rotas" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="870" y="40" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
