@@ -31,8 +31,5 @@
 ### Problema de Rotas
     Genetic
 
-
-  ---->Clusters--|-->Rotas---->"Fitness"
-                 |
-                 v
-             "Fitness"
+## RELATORIO
+https://www.overleaf.com/project/606c68875dd303926aeb7dd6
