@@ -1,0 +1,4 @@
+﻿  GreenNet.cpp
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\GreenNet.cpp(75,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\GreenNet.cpp(79,20): warning C4018: '<': signed/unsigned mismatch
+  GreenNet.vcxproj -> C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Debug\GreenNet.exe
