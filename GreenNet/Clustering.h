@@ -32,10 +32,10 @@ class Clusters
 public:
 	std::vector<std::vector<Local>> ClusterBest;
 	std::vector<std::vector<Local>> ClusterCurrent;
-	void OptimizeClusters(std::vector<Local> Locais);
-
+	void OptimizeClusters(std::vector<Local> Armazens, std::vector<Local> Lojas);
+	void printClusterCurrent();
 private:
-	void CreatFirstSolution(std::vector<Local> Locais);
+	void CreatFirstSolution(std::vector<Local> Armazens, std::vector<Local> Lojas);
 	double EvaluateSolution();
 	double DetermineDistance(long double x1, long double x2, long double y1, long double y2);
 };

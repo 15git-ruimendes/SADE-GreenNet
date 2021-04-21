@@ -6,7 +6,7 @@
 #include "Clustering.h"
 #include "TSM.h"
 
-#define NumArmz 150
+#define NumArmz 100
 #define NumLojas 200
 #define NumParam 4
 
@@ -16,6 +16,7 @@ public:
 	void ParseFile(std::vector<std::string> Array, std::string Delim,std::vector<std::vector<long double>>& Res,int Size) {
 			
 		for (int i = 0; i < Size;i++) {
+			Res.resize(i + 1);
 			size_t pos = 0;
 			std::string token;
 			int j = 0;
@@ -23,13 +24,13 @@ public:
 				token = Array[i].substr(0, pos);
 				
 				if (i >= 1) {
-					(Res)[i - 1][j] = std::stold(token);
+					(Res)[i - 1].push_back(std::stold(token));
 				}
 				j++;
 				Array[i].erase(0, pos + Delim.length());
 			}
 			if (i >= 1) {
-				(Res)[i - 1][j] = std::stold(Array[i]);
+				(Res)[i - 1].push_back(std::stold(Array[i]));
 			}
 			
 		}
@@ -64,24 +65,28 @@ int main() {
 	}
 	std::cout << "Files Read \n";
 	
-	std::vector<std::vector<long double>> Armazens(NumArmz, std::vector<long double>(NumParam));
-	std::vector<std::vector<long double>> Lojas(NumLojas, std::vector<long double>(NumParam));
-	p.ParseFile(ArmazensTxt, ";",Armazens,TexArm);
-	p.ParseFile(LojasTxt, ";", Lojas,TexLoj);
+	std::vector<std::vector<long double>> ArmazensSplit;
+	std::vector<std::vector<long double>> LojasSplit;
+	p.ParseFile(ArmazensTxt, ";",ArmazensSplit,TexArm);
+	p.ParseFile(LojasTxt, ";", LojasSplit,TexLoj);
 	std::cout << "Files Parsed \n";
 
 
-	std::vector<Local> Locais;
-	for (int i = 0; i < Armazens.size();i++) {
-		Local aux(Armazens[i],'A');
-		Locais.push_back(aux);
+	std::vector<Local> ArmazemVect;
+	std::vector<Local> LojaVect;
+	for (int i = 0; i < ArmazensSplit.size()-1;i++) {
+		Local aux(ArmazensSplit[i],'A');
+		ArmazemVect.push_back(aux);
 	}
-	for (int i = 0; i < Lojas.size(); i++) {
-		Local aux(Lojas[i], 'L');
-		Locais.push_back(aux);
+	for (int i = 0; i < LojasSplit.size()-1; i++) {
+		Local aux(LojasSplit[i], 'L');
+		LojaVect.push_back(aux);
 	}
-	std::cout << "Local Matrixes Done";
+	std::cout << "Local Matrixes Done\n";
 
+	Clusters Clust;
+	Clust.OptimizeClusters(ArmazemVect, LojaVect);
+	Clust.printClusterCurrent();
 
 	return 0;
 }
