@@ -3,27 +3,141 @@
 #include <vector>
 #include <string>
 #include <math.h>
+#include <ctime>
 
-#define TempValD 0.5
-#define TempValF 0.5
+#define TempValD 0
+#define TempValF 1
 
 
-void Clusters::OptimizeClusters(std::vector<Local> Armazens, std::vector<Local> Lojas)
+void Clusters::OptimizeClusters(std::vector<Local> Armazens, std::vector<Local> Lojas, float sigma)
 {
+	clock_t init;
+	double diff = 0,rho;
+	srand((unsigned)std::time(0));
+
+	init = clock();
 	CreatFirstSolution(Armazens, Lojas);
-	std::cout << EvaluateSolution()<<std::endl;
-}
-
-void Clusters::printClusterCurrent()
-{
-	std::cout << "Clusters Being Printed! \n";
-	for (int i = 0; i < ClusterCurrent.size(); i++) {
-		for (int j = 0; j < ClusterCurrent[i].size(); j++) {
-			std::cout << ClusterCurrent[i][j].Id << "\t";
+	double BestVal = EvaluateSolution('C');
+	std::cout << "Valor de Avaliacao:   ";
+	std::cout << BestVal << std::endl;
+	printClusterCurrent('C');
+	printf("=================================== %d\n", ClusterCurrent.size());
+	ClusterBest = ClusterCurrent;
+	while ((clock() - init)/CLOCKS_PER_SEC < 30 ) {
+		if (RemaningLojas.Id == 0)
+		{
+			CreatNeighborhood();
+			RemaningLojas.Id = 0;
 		}
-		std::cout << std::endl;
+		else {
+			CreatNeighborhood();
+		}
+		
+		if (EvaluateSolution('P') < BestVal) {
+			BestVal = EvaluateSolution('P');
+			ClusterBest = ProposedCluster;
+			
+			std::cout << "Valor de Avaliacao:   ";
+			std::cout << BestVal << std::endl;
+			printClusterCurrent('B');
+			printf("=================================== %d\n",ClusterBest.size());
+		}
+	
+		diff = EvaluateSolution('P') - EvaluateSolution('C');
+		rho = exp(-diff / sigma);
+		if (rand() % 1 < rho)
+		{
+			ClusterCurrent = ProposedCluster;
+			ProposedCluster.clear();
+		}
+		else 
+			ProposedCluster.clear();
 	}
 }
+
+void Clusters::printClusterCurrent(char Qual)
+{
+	if (Qual == 'C') 
+	{
+		std::cout << "ClusterCurrent Being Printed! \n";
+		for (int i = 0; i < ClusterCurrent.size(); i++) {
+			for (int j = 0; j < ClusterCurrent[i].size(); j++) {
+				std::cout << ClusterCurrent[i][j].Id << "\t";
+			}
+			std::cout << std::endl;
+		}
+	}
+	else if (Qual == 'P') 
+	{
+		std::cout << "ProposedCluster Being Printed! \n";
+		for (int i = 0; i < ProposedCluster.size(); i++) {
+			for (int j = 0; j < ProposedCluster[i].size(); j++) {
+				std::cout << ProposedCluster[i][j].Id << "\t";
+			}
+			std::cout << std::endl;
+		}
+	}
+	else if (Qual == 'B') 
+	{
+		std::cout << "ClusterBest Being Printed! \n";
+		for (int i = 0; i < ClusterBest.size(); i++) {
+			for (int j = 0; j < ClusterBest[i].size(); j++) {
+				std::cout << ClusterBest[i][j].Id << "\t";
+			}
+			std::cout << std::endl;
+		}
+	}
+}
+
+void Clusters::CreatNeighborhood()
+{
+	int i1=0,i2=0,i3=0,i4=0,j1=0,j2=0,j3=0,j4=0,loja1=0;
+		do {
+			srand((unsigned)std::time(0));
+			i1 = rand() % (ClusterCurrent.size());
+			i2 = rand() % (ClusterCurrent.size());
+			i3 = rand() % (ClusterCurrent.size());
+
+
+			if ((ClusterCurrent[i1].size() - 1 > 0) && (ClusterCurrent[i2].size() - 1 > 0) && (ClusterCurrent[i3].size() - 1 > 0))
+			{
+
+				j1 = rand() % (ClusterCurrent[i1].size() - 1) + 1;
+				j2 = rand() % (ClusterCurrent[i2].size() - 1) + 1;
+				j3 = rand() % (ClusterCurrent[i3].size() - 1) + 1;
+			}
+			else {
+				j1 = 0;
+				j2 = 0;
+				j3 = 0;
+			}
+		} while (i1 == i2 || i1 == i3 || i2 == i3);
+		ProposedCluster = ClusterCurrent;
+		if (j1 == j2 && j2 == j3 && j3 == 0)
+			return;
+
+	if ((int)RemaningLojas.Id == 0)
+	{
+		ProposedCluster[i2].push_back(ProposedCluster[i1][j1]);
+		ProposedCluster[i1].push_back(ProposedCluster[i2][j2]);
+		RemaningLojas = (ProposedCluster[i3][j3]);
+		ProposedCluster[i1].erase(ProposedCluster[i1].begin() + j1);
+		ProposedCluster[i2].erase(ProposedCluster[i2].begin() + j2);
+		ProposedCluster[i3].erase(ProposedCluster[i3].begin() + j3);			
+	}
+	else if ((int)RemaningLojas.Id != 0)
+	{
+		for (int i = 1; i < ProposedCluster[i3].size();i++)
+		{
+			if (ProposedCluster[i3][i].Id == RemaningLojas.Id)
+				printf("Apanhei-te fdp %f %f\n",RemaningLojas.Id, ProposedCluster[i3][i].Id);
+		}
+		ProposedCluster[i3].push_back(RemaningLojas);
+	}
+	return;
+}
+
+
 
 void Clusters::CreatFirstSolution(std::vector<Local> Armazens, std::vector<Local> Lojas)
 {
@@ -59,28 +173,56 @@ void Clusters::CreatFirstSolution(std::vector<Local> Armazens, std::vector<Local
 			}
 		}
 	}
+
 }
 
-double Clusters::EvaluateSolution()
+double Clusters::EvaluateSolution(char Qual)
 {
 	long double MaxDistance = 0, FullFilment = 0, auxDist = 0, auxFull = 0, Deliv = 0;
 	long double x1, y1;
-
-	for (int i = 0; i < ClusterCurrent.size();i++) {
-		x1 = ClusterCurrent[i][0].xX;
-		y1 = ClusterCurrent[i][0].yY;
-		for (int j = 1; j < ClusterCurrent[i].size();j++) {
-			FullFilment += ClusterCurrent[i][j].Stocks;
-			if (MaxDistance < DetermineDistance(x1, ClusterCurrent[i][j].xX, y1, ClusterCurrent[i][j].yY))
-				MaxDistance = DetermineDistance(x1, ClusterCurrent[i][j].xX, y1, ClusterCurrent[i][j].yY);
+	if (Qual == 'C') {
+		for (int i = 0; i < ClusterCurrent.size();i++) {
+			x1 = ClusterCurrent[i][0].xX;
+			y1 = ClusterCurrent[i][0].yY;
+			for (int j = 1; j < ClusterCurrent[i].size();j++) {
+				FullFilment += ClusterCurrent[i][j].Stocks;
+				if (MaxDistance < DetermineDistance(x1, ClusterCurrent[i][j].xX, y1, ClusterCurrent[i][j].yY))
+					MaxDistance = DetermineDistance(x1, ClusterCurrent[i][j].xX, y1, ClusterCurrent[i][j].yY);
+			}
+			auxDist += MaxDistance;
+			if ((ClusterCurrent[i][0].Stocks - FullFilment) < 0)
+				return 60000;
+			else 
+				auxFull += (ClusterCurrent[i][0].Stocks - FullFilment);
+			MaxDistance = 0;
+			FullFilment = 0;
+			Deliv += ClusterCurrent[i].size();
 		}
-		auxDist+=MaxDistance;
-		auxFull += (ClusterCurrent[i][0].Stocks - FullFilment);
-		MaxDistance = 0;
-		FullFilment = 0;
-	}
 
-	return TempValD*auxDist + TempValF*auxFull;
+		return TempValD * auxDist/ClusterCurrent.size() + TempValF * Deliv;
+	}
+	if (Qual == 'P') {
+		for (int i = 0; i < ProposedCluster.size();i++) {
+			x1 = ProposedCluster[i][0].xX;
+			y1 = ProposedCluster[i][0].yY;
+			for (int j = 1; j < ProposedCluster[i].size();j++) {
+				FullFilment += ProposedCluster[i][j].Stocks;
+				if (MaxDistance < DetermineDistance(x1, ProposedCluster[i][j].xX, y1, ProposedCluster[i][j].yY))
+					MaxDistance = DetermineDistance(x1, ProposedCluster[i][j].xX, y1, ProposedCluster[i][j].yY);
+			}
+			auxDist += MaxDistance;
+			if ((ClusterCurrent[i][0].Stocks - FullFilment) < 0)
+				return 60000;
+			else
+				auxFull += (ClusterCurrent[i][0].Stocks - FullFilment);
+			MaxDistance = 0;
+			FullFilment = 0;
+			Deliv += ClusterCurrent[i].size();
+		}
+
+		return TempValD * auxDist / ClusterCurrent.size() + TempValF * Deliv;
+	}
+	
 }
 
 double Clusters::DetermineDistance(long double x1, long double x2, long double y1, long double y2)

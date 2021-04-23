@@ -2,12 +2,14 @@
 #include <iostream>
 #include <vector>
 #include <string>
-
+#include <cstdlib>
 
 class Local
 {
 public:
 	long double Type, xX, yY, Stocks, Id;
+	Local() { ; }
+	~Local() { ; }
 	Local(std::vector<long double>Loc, const char Ty) {
 		if (Ty == 'A') {
 			Type = 1;
@@ -32,11 +34,14 @@ class Clusters
 public:
 	std::vector<std::vector<Local>> ClusterBest;
 	std::vector<std::vector<Local>> ClusterCurrent;
-	void OptimizeClusters(std::vector<Local> Armazens, std::vector<Local> Lojas);
-	void printClusterCurrent();
+	std::vector<std::vector<Local>> ProposedCluster;
+	Local RemaningLojas;
+	void OptimizeClusters(std::vector<Local> Armazens, std::vector<Local> Lojas,float sigma);
+	void printClusterCurrent(char Qual);
 private:
+	void CreatNeighborhood();
 	void CreatFirstSolution(std::vector<Local> Armazens, std::vector<Local> Lojas);
-	double EvaluateSolution();
+	double EvaluateSolution(char Qual);
 	double DetermineDistance(long double x1, long double x2, long double y1, long double y2);
 };
 
