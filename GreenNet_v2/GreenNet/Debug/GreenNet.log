@@ -1,0 +1,9 @@
+﻿  TSM.cpp
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(11,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(49,8): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(51,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(84,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(112,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(120,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(131,12): warning C4101: 'cut2': unreferenced local variable
+  GreenNet.vcxproj -> C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Debug\GreenNet.exe
