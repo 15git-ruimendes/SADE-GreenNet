@@ -10,6 +10,11 @@
 #define NumLojas 200
 #define NumParam 4
 
+double Distance(long double x1, long double x2, long double y1, long double y2)
+{
+	return sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2));
+}
+
 void FinalStockCheck(std::vector<std::vector<Local>> BestClust,int *checkstock,float *maxdist1,int *lojasAbas,float *avgFullFill) 
 {
 	
@@ -36,6 +41,16 @@ void FinalStockCheck(std::vector<std::vector<Local>> BestClust,int *checkstock,f
 	}
 	(*maxdist1) =(float) (maxdistaux / (BestClust.size()));
 	(*avgFullFill) = (float)(fullfillaux /( BestClust.size()));
+}
+
+
+double CheckPathDistance(std::vector<Local> Path) {
+	double Dist = 0;
+	for (int i = 0; i < Path.size()-1; i++) {
+		Dist += Distance(Path[i].xX, Path[i + 1].xX, Path[i].yY, Path[i + 1].yY);
+	}
+	Dist += Distance(Path[Path.size() - 1].xX, Path[0].xX, Path[Path.size() - 1].yY, Path[0].yY);
+	return Dist;
 }
 
 
@@ -115,15 +130,32 @@ int main() {
 
 	Clusters Clust;
 	printf("Lojas Iniciais %d\n", LojaVect.size());
-	Clust.OptimizeClusters(ArmazemVect, LojaVect, 0.9);
+	Clust.OptimizeClusters(ArmazemVect, LojaVect, 0.99);
 	Clust.printClusterCurrent('B');
 
 	int checkstock = 0,lojasAbst=0;
 	float maxdist = 0,avgFulFill =0;
 	FinalStockCheck(Clust.ClusterBest,&checkstock,&maxdist,&lojasAbst,&avgFulFill);
-	printf("Are clusters compatible with stocks: %d  ; Avg. Max Dist:  %f; Fullfiled Shops:  %d; Avg Usage of Warehouse:  %f\n", checkstock, maxdist,lojasAbst,avgFulFill*100);
+	printf("Are clusters compatible with stocks: %d  ; Avg. Max Dist:  %f; Fullfiled Shops:  %d; Avg Usage :  %f %%\n", checkstock, maxdist,lojasAbst,(avgFulFill*100));
 
 	Paths PathOptim;
+	std::vector<std::vector<Local>> Clusts;
+	for (int i = 0; i < Clust.ClusterBest.size();i++) {
+		Clusts.push_back(Clust.ClusterBest[i]);
+	}
+
+	PathOptim.OptimizePath(Clusts);
+	std::cout << "===================================\n";
+	std::cout << "Paths Being Printed! \n";
+	for (int i = 0; i < PathOptim.PathsDefined.size(); i++) {
+		for (int j = 0; j < 10; j++) {
+			if (j < PathOptim.PathsDefined[i].size())
+				std::cout << PathOptim.PathsDefined[i][j].Id << "\t";
+			else
+				std::cout << "\t";
+		}
+		std::cout << CheckPathDistance(PathOptim.PathsDefined[i]) <<std::endl;
+	}
 
 	return 0;
 }

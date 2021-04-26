@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <cstdlib>
+#include <math.h>
+#include <ctime>
 
 class Local
 {
