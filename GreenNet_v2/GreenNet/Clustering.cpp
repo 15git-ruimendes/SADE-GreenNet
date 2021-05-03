@@ -20,11 +20,11 @@ void Clusters::OptimizeClusters(std::vector<Local> Armazens, std::vector<Local> 
 	printClusterCurrent('C');
 	printf("=================================== %d\n", ClusterCurrent.size());
 	ClusterBest = ClusterCurrent;
-	while ((clock() - init) / CLOCKS_PER_SEC < 300 && Iter < 4000000) {
+	while ((clock() - init) / CLOCKS_PER_SEC < 600 && Iter < 4000000) {
 
 		CreatNeighborhood();
 
-		if((Temp = 100 - sigma * FullIt) < 0)
+		if((Temp = 0.97 * exp(-0.0002 *FullIt)+0.03) < 0)
 			Temp = 0;
 
 		if (EvaluateSolution('P') < BestVal) {
@@ -40,6 +40,9 @@ void Clusters::OptimizeClusters(std::vector<Local> Armazens, std::vector<Local> 
 		Iter++;
 		diff = EvaluateSolution('P') - EvaluateSolution('C');
 		rho = exp(-diff / Temp);
+		FullIt++;
+		ResultFile << EvaluateSolution('C') << ";" << EvaluateSolution('P') <<";"<< Temp << ";" << rho * 100 << ";" << FullIt << ";" << std::endl;
+
 		if (rand() % 100 < rho*100 && EvaluateSolution('P') < 4000)
 		{
 			ClusterCurrent = ProposedCluster;
@@ -48,8 +51,7 @@ void Clusters::OptimizeClusters(std::vector<Local> Armazens, std::vector<Local> 
 		else
 			ProposedCluster.clear();
 
-		ResultFile << EvaluateSolution('C') << ";" << Temp << ";" << rho*100 << ";" << std::endl;
-		FullIt++;
+		
 	}
 }
 
@@ -112,23 +114,31 @@ void Clusters::CreatNeighborhood()
 				LOg1 = 0;
 				LOg2 = 0;
 			}
-		} while (LOg1 == 0 || LOg2 == 0 || A1 == A2);
+		} while (LOg1 == 0 || LOg2 == 0 );
 		ProposedCluster = ClusterCurrent;
 		
 		I1 = ProposedCluster[A1].begin() + Pos1;
 		I2 = ProposedCluster[A2].begin() + Pos2;
-
-		ProposedCluster[A2].insert(I2, ProposedCluster[A1][LOg1]);
-		ProposedCluster[A1].insert(I1, ProposedCluster[A2][LOg2]);
-		if (Pos1 <= LOg1)
-			ProposedCluster[A1].erase(ProposedCluster[A1].begin() + LOg1 + 1);
-		else
-			ProposedCluster[A1].erase(ProposedCluster[A1].begin() + LOg1);
-		if (Pos2 <= LOg2)
-			ProposedCluster[A2].erase(ProposedCluster[A2].begin() + LOg2 + 1);
-		else
-			ProposedCluster[A2].erase(ProposedCluster[A2].begin() + LOg2);
-
+		if (A1 != A2) {
+			ProposedCluster[A2].insert(I2, ProposedCluster[A1][LOg1]);
+			ProposedCluster[A1].insert(I1, ProposedCluster[A2][LOg2]);
+			if (Pos1 <= LOg1)
+				ProposedCluster[A1].erase(ProposedCluster[A1].begin() + LOg1 + 1);
+			else
+				ProposedCluster[A1].erase(ProposedCluster[A1].begin() + LOg1);
+			if (Pos2 <= LOg2)
+				ProposedCluster[A2].erase(ProposedCluster[A2].begin() + LOg2 + 1);
+			else
+				ProposedCluster[A2].erase(ProposedCluster[A2].begin() + LOg2);
+		}
+		else if(LOg2 != LOg1) {
+			L1 = ProposedCluster[A1][LOg1];
+			L2 = ProposedCluster[A2][LOg2];
+			
+			ProposedCluster[A1][LOg1] = L2;
+			ProposedCluster[A2][LOg2] = L1;
+		}
+		
 	}
 	else
 	{
