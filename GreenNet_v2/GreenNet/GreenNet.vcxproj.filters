@@ -21,14 +21,8 @@
     <ClCompile Include="Clustering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TSM.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TSM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Clustering.h">
       <Filter>Header Files</Filter>
     </ClInclude>

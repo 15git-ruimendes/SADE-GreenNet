@@ -96,7 +96,7 @@ int main() {
 	int TexArm = 0, TexLoj = 0;
 
 	std::vector<std::string> ArmazensTxt(NumArmz);
-	std::fstream ArmzFile("C:/Users/xavie/Desktop/2ªsemestre/SADE/Trabalho de grupo/SADE-GreenNet-main/GreenNet_v2/GreenNet/Dados/Armazens.txt");
+	std::fstream ArmzFile("Dados/Armazens.txt");
 	for (int i = 0; std::getline(ArmzFile, ArmazensTxt[i]);i++)
 	{
 		TexArm++;
@@ -104,7 +104,7 @@ int main() {
 		//std::cout << "\n";
 	}
 	std::vector<std::string> LojasTxt(NumLojas);
-	std::fstream LojFile("C:/Users/xavie/Desktop/2ªsemestre/SADE/Trabalho de grupo/SADE-GreenNet-main/GreenNet_v2/GreenNet/Dados/Lojas.txt");
+	std::fstream LojFile("Dados/Lojas.txt");
 	for (int i = 0; std::getline(LojFile, LojasTxt[i]);i++)
 	{
 		TexLoj++;
@@ -134,7 +134,7 @@ int main() {
 
 	Clusters Clust;
 	printf("Lojas Iniciais %d\n", LojaVect.size());
-	Clust.OptimizeClusters(ArmazemVect, LojaVect, 0.99);
+	Clust.OptimizeClusters(ArmazemVect, LojaVect, 0.1);
 	//Clust.printClusterCurrent('B');
 
 	int checkstock = 0,lojasAbst=0;

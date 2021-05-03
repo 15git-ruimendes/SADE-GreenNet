@@ -1,9 +1,25 @@
-﻿  TSM.cpp
-C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(11,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(49,8): warning C4018: '<=': signed/unsigned mismatch
-C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(51,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(84,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(112,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(120,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\TSM.cpp(131,12): warning C4101: 'cut2': unreferenced local variable
+﻿  Clustering.cpp
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(61,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(62,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(71,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(72,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(81,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(82,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(176,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(183,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(213,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(218,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(219,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(220,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(221,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(232,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(237,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(238,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(239,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(240,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(251,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(268,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(273,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(275,18): warning C4244: '=': conversion from 'long double' to 'int', possible loss of data
+C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Clustering.cpp(257): warning C4715: 'Clusters::EvaluateSolution': not all control paths return a value
   GreenNet.vcxproj -> C:\Users\Rui Mendes\Desktop\2Sem\SADE\GreenNet\Debug\GreenNet.exe
