@@ -15,43 +15,47 @@ double Distance(long double x1, long double x2, long double y1, long double y2)
 	return sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2));
 }
 
-void FinalStockCheck(std::vector<std::vector<Local>> BestClust,int *checkstock,float *maxdist1,int *lojasAbas,float *avgFullFill) 
-{
-	
-	(*checkstock) = 1;
-	long double stocks, maxdist, maxdistaux=0,fullfillaux=0;
-	for (int i = 0; i < BestClust.size() ; i++)
-	{
-		stocks = BestClust[i][0].Stocks;
-		maxdist = 0;
-		for (int j = 1; j < BestClust[i].size(); j++) 
-		{
-			stocks -= BestClust[i][j].Stocks;
-			if (sqrt(pow((BestClust[i][j].xX - BestClust[i][0].xX), 2) + pow((BestClust[i][j].yY - BestClust[i][0].yY), 2)) > maxdist) 
-			{
-				maxdist = sqrt(pow((BestClust[i][j].xX - BestClust[i][0].xX), 2) + pow((BestClust[i][j].yY - BestClust[i][0].yY), 2));
-			}
-			if (stocks < 0)
-				(*checkstock) = 0;
-			
-		}
-		fullfillaux += 1 - (stocks) / BestClust[i][0].Stocks;
-		maxdistaux += maxdist;
-		(*lojasAbas) += (BestClust[i].size()-1);
-	}
-	(*maxdist1) =(float) (maxdistaux / (BestClust.size()));
-	(*avgFullFill) = (float)(fullfillaux /( BestClust.size()));
-}
-
-
 double CheckPathDistance(std::vector<Local> Path) {
 	double Dist = 0;
-	for (int i = 0; i < Path.size()-1; i++) {
+	for (int i = 0; i < Path.size() - 1; i++) {
 		Dist += Distance(Path[i].xX, Path[i + 1].xX, Path[i].yY, Path[i + 1].yY);
 	}
 	Dist += Distance(Path[Path.size() - 1].xX, Path[0].xX, Path[Path.size() - 1].yY, Path[0].yY);
 	return Dist;
 }
+
+double CheckStock(std::vector<Local> Path) {
+	double Entregue = 0;
+	for (int i = 1; i < Path.size(); i++)
+	{
+		Entregue += Path[i].Stocks;
+	}
+	return Entregue;
+}
+
+void FinalStockCheck(std::vector<std::vector<Local>> BestClust,int *checkstock,float *maxdist1,int *lojasAbas,float *avgFullFill) 
+{
+	
+	(*checkstock) = 1;
+	long double stocks, maxdist=0, maxdistaux=0,fullfillaux=0;
+	for (int i = 0; i < BestClust.size() ; i++)
+	{
+		stocks = BestClust[i][0].Stocks;
+		maxdist += CheckPathDistance(BestClust[i]);
+		for (int j = 1; j < BestClust[i].size(); j++) 
+		{
+			stocks -= BestClust[i][j].Stocks;
+			if (stocks < 0)
+				(*checkstock) = 0;
+		}
+
+		fullfillaux += 1 - (stocks) / BestClust[i][0].Stocks;
+		(*lojasAbas) += (BestClust[i].size()-1);
+	}
+	(*maxdist1) = (float) maxdist;
+	(*avgFullFill) = (float)(fullfillaux /( BestClust.size()));
+}
+
 
 
 class Parse
@@ -130,31 +134,24 @@ int main() {
 
 	Clusters Clust;
 	printf("Lojas Iniciais %d\n", LojaVect.size());
-	Clust.OptimizeClusters(ArmazemVect, LojaVect, 0.99);
-	Clust.printClusterCurrent('B');
+	Clust.OptimizeClusters(ArmazemVect, LojaVect, 0.1);
+	//Clust.printClusterCurrent('B');
 
 	int checkstock = 0,lojasAbst=0;
 	float maxdist = 0,avgFulFill =0;
 	FinalStockCheck(Clust.ClusterBest,&checkstock,&maxdist,&lojasAbst,&avgFulFill);
-	printf("Are clusters compatible with stocks: %d  ; Avg. Max Dist:  %f; Fullfiled Shops:  %d; Avg Usage :  %f %%\n", checkstock, maxdist,lojasAbst,(avgFulFill*100));
+	printf("Are clusters compatible with stocks: %d  ; Total Distance:  %f; Fullfiled Shops:  %d; Avg Usage :  %f %%\n", checkstock, maxdist,lojasAbst,(avgFulFill*100));
 
-	Paths PathOptim;
-	std::vector<std::vector<Local>> Clusts;
-	for (int i = 0; i < Clust.ClusterBest.size();i++) {
-		Clusts.push_back(Clust.ClusterBest[i]);
-	}
-
-	PathOptim.OptimizePath(Clusts);
 	std::cout << "===================================\n";
-	std::cout << "Paths Being Printed! \n";
-	for (int i = 0; i < PathOptim.PathsDefined.size(); i++) {
+	std::cout << "Final Paths Being Printed! \n";
+	for (int i = 0; i < Clust.ClusterBest.size(); i++) {
 		for (int j = 0; j < 10; j++) {
-			if (j < PathOptim.PathsDefined[i].size())
-				std::cout << PathOptim.PathsDefined[i][j].Id << "\t";
+			if (j < Clust.ClusterBest[i].size())
+				std::cout << Clust.ClusterBest[i][j].Id << "\t";
 			else
 				std::cout << "\t";
 		}
-		std::cout << CheckPathDistance(PathOptim.PathsDefined[i]) <<std::endl;
+		std::cout << CheckPathDistance(Clust.ClusterBest[i]) << "   Capacity :" << Clust.ClusterBest[i][0].Stocks << "   Delivered:  " << CheckStock(Clust.ClusterBest[i])<<std::endl;
 	}
 
 	return 0;

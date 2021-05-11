@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #include <cstdlib>
@@ -42,6 +43,7 @@ public:
 	void printClusterCurrent(char Qual);
 private:
 	void CreatNeighborhood();
+	double CalculateFitness(std::vector<Local> Prop);
 	void CreatFirstSolution(std::vector<Local> Armazens, std::vector<Local> Lojas);
 	double EvaluateSolution(char Qual);
 	double DetermineDistance(long double x1, long double x2, long double y1, long double y2);
